@@ -1,7 +1,7 @@
 import schedule
 import time
-from ZADANIE1.database import create_table
-from ZADANIE1.flight_data import fetch_flight_data, plot_flight_data
+from database import create_table
+from flight_data import fetch_flight_data, plot_flight_data
 
 def main(interval, max_repeats):
     create_table(max_repeats)
