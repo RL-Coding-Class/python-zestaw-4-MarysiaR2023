@@ -33,12 +33,11 @@ def create_table(max_repeats, databasefile="flights.db"):
         connection.commit()
     connection.close()
     # zamknij polaczenie z baza danych
-    
 
 
 def save_to_db(flight_df, databasefile="flights.db"):
     # napisz kod zapisania do bazy danych SQLite
-    connection = sqlite3.connect("flights.db")
+    connection = sqlite3.connect(databasefile)
     flight_df.to_sql("airport_atl", connection, if_exists="append", index=False)
     connection.close()
 
