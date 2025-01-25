@@ -1,11 +1,11 @@
-import schedule
 import time
+import schedule
 from database import create_table
 from flight_data import fetch_flight_data, plot_flight_data
 
 def main(interval, max_repeats):
     create_table(max_repeats)
-    
+ 
     # Licznik iteracji
     counter = 0
 
@@ -25,6 +25,7 @@ def main(interval, max_repeats):
     while counter < max_repeats:
         schedule.run_pending()
         time.sleep(1)  # Krótkie opóźnienie zmniejsza obciążenie CPU
+    return None
 
 
 if __name__ == '__main__':

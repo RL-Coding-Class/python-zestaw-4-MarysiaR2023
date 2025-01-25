@@ -1,11 +1,11 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import requests
-from database import *
+from zadanie_1.database import save_to_db, load_flight_data
 
 # Funkcja do pozyskania danych z OpenSky Network API
 def fetch_flight_data(databasefile="flights.db"):
-    # wspolrzedne ATL (Atlanta) w stopniach 
+    # wspolrzedne ATL (Atlanta) w stopniach
     lon_min, lat_min = -85.4277, 32.6407
     lon_max, lat_max = -83.4277, 34.6407
     # REST API QUERY
@@ -15,7 +15,7 @@ def fetch_flight_data(databasefile="flights.db"):
    'lamin=' + str(lat_min) + '&lomin=' + str(lon_min) +
    '&lamax=' + str(lat_max) + '&lomax=' + str(lon_max)
 )
-    response = requests.get(url_data).json()
+    response = requests.get(url_data, timeout=60).json()
     to_data = response['states']
     col_name = [
     'icao24', 'callsign', 'origin_country', 'time_position', 'last_contact',
@@ -29,27 +29,27 @@ def fetch_flight_data(databasefile="flights.db"):
     # napisz kod do pozyskania danych z OpenSky Network API, pamietaj o zalozeniu konta
     flight_df = pd.DataFrame(data)
     # Zapisz dane do bazy danych SQLite
-    save_to_db(flight_df)
+    save_to_db(flight_df, databasefile)
     print("Data saved to database successfully!")
 
 
 # Odczyt danych i wygenerowanie wykresu z danych lotniczych
 def plot_flight_data(databasefile="flights.db", show_plot=True):
     # Wczytaj dane lotnicze z bazy danych
-    flight_df = load_flight_data()
+    flight_df = load_flight_data(databasefile)
     # to bedzie obiekt typu DataFrame
-    
-    # caly kod tutaj (filtracja, konwersja jednostek, sortowanie i wybieranie jednego, rysowanie wykresu)
+
     flight_df = flight_df.fillna('No Data')
-    flight_df = flight_df[ (flight_df['velocity'] != 'No Data') & (flight_df['geo_altitude'] != 'No Data') ]
+    flight_df = flight_df[ (flight_df['velocity'] != 'No Data')
+                          & (flight_df['geo_altitude'] != 'No Data') ]
     flight_df = flight_df.sort_values(by='velocity').drop_duplicates(subset='icao24', keep='first')
-    X = flight_df['velocity']
-    Y = flight_df['geo_altitude']
-    X = pd.to_numeric(X, downcast ='float', errors='coerce')
-    Y = pd.to_numeric(Y, downcast ='float', errors='coerce')
-    X = [(el*3.600) for el in X]
-    Y = [el/1000 for el in Y]
-    plt.scatter(X,Y, color = 'royalblue', alpha=0.9)
+    x = flight_df['velocity']
+    y = flight_df['geo_altitude']
+    x = pd.to_numeric(x, downcast ='float', errors='coerce')
+    y = pd.to_numeric(y, downcast ='float', errors='coerce')
+    x = [(el*3.600) for el in x]
+    y = [el/1000 for el in y]
+    plt.scatter(x,y, color = 'royalblue', alpha=0.9)
     plt.grid(True)
     plt.title("Aircraft Velocity vs. Geometric Altitude")
     plt.xlabel("Velocity (km/h)")
