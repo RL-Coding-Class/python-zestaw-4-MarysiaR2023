@@ -15,7 +15,7 @@ class Pojazd(ABC):
     @predkosc.setter
     def predkosc(self,speed):
         if speed < 0:
-            raise ValueError("Speed value can't be less than 0")
+            raise ValueError("Prędkość nie może być ujemna!")
         self._predkosc = speed
 
     @predkosc.deleter
@@ -65,6 +65,7 @@ class FabrykaPojazdow(ABC):
     def sprawdz_rok(rok:int):
         if rok >= 1900 and rok <= 2024:
             return True
+        raise ValueError("Zły rok")
         return False
 
     def _zwieksz_licznik(self):
