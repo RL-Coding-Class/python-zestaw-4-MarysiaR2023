@@ -65,7 +65,7 @@ class FabrykaPojazdow(ABC):
     def sprawdz_rok(rok:int):
         if rok >= 1900 and rok <= 2024:
             return True
-        raise ValueError("Zły rok")
+        raise ValueError("Nieprawidłowy rok produkcji!")
         return False
 
     def _zwieksz_licznik(self):
