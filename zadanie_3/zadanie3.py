@@ -61,15 +61,17 @@ class EventHandler:
 
 # Klasa pochodna z nowymi rejestracjami typów
 class DerivedHandler(EventHandler):
-
+    @singledispatchmethod
+    def handle_event(self, event):
+        pass
     # Napisz obsluge zdarzen int
-    @EventHandler.handle_event.register
+    @handle_event.register
     def _(self,arg: int):
         print("handling integer from derived class: ", arg)
         self.event_count = self.event_count+1
 
     # Napisz obsluge zdarzen float
-    @EventHandler.handle_event.register
+    @handle_event.register
     def _(self,arg: float):
         print("handling float: ", arg)
         self.event_count = self.event_count+1
