@@ -36,6 +36,7 @@ class Autobus(Pojazd):
     def __init__(self, model: str, rok: int,liczba_miejsc: int):
         super().__init__(model, rok)
         self.liczba_miejsc = liczba_miejsc
+        
 
 
 class FabrykaPojazdow(ABC):
@@ -78,6 +79,7 @@ class FabrykaPojazdow(ABC):
 class FabrykaSamochodow(FabrykaPojazdow):
     def stworz_pojazd(self,model: str, rok: int, liczba_drzwi: int = 4) -> Samochod:
         # tu implementacja
+        self.sprawdz_rok(rok)
         pojazd = Samochod(model,rok, liczba_drzwi)
         self._zwieksz_licznik()
         return pojazd
@@ -85,6 +87,7 @@ class FabrykaSamochodow(FabrykaPojazdow):
 class FabrykaAutobusow(FabrykaPojazdow):
     def stworz_pojazd(self, model: str, rok: int, liczba_miejsc: int = 50) -> Autobus:
         # tu implementacja
+        self.sprawdz_rok(rok)
         pojazd = Autobus(model, rok, liczba_miejsc)
         self._zwieksz_licznik()
         return pojazd
