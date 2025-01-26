@@ -35,8 +35,7 @@ class Autobus(Pojazd):
     # w __init__ dodaj skladowa liczba_miejsc
     def __init__(self, model: str, rok: int,liczba_miejsc: int):
         super().__init__(model, rok)
-        self.liczba_miejsc = liczba_miejsc
-        
+        self.liczba_miejsc = liczba_miejsc   
 
 
 class FabrykaPojazdow(ABC):
