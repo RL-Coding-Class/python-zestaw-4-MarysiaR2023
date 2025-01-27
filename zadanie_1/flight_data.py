@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import requests
-from zadanie_1.database import save_to_db, load_flight_data
+from database import save_to_db, load_flight_data
 
 # Funkcja do pozyskania danych z OpenSky Network API
 def fetch_flight_data(databasefile="flights.db"):
@@ -38,7 +38,6 @@ def plot_flight_data(databasefile="flights.db", show_plot=True):
     # Wczytaj dane lotnicze z bazy danych
     flight_df = load_flight_data(databasefile)
     # to bedzie obiekt typu DataFrame
-
     flight_df = flight_df.fillna('No Data')
     flight_df = flight_df[ (flight_df['velocity'] != 'No Data')
                           & (flight_df['geo_altitude'] != 'No Data') ]

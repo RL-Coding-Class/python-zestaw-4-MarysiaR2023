@@ -1,7 +1,7 @@
 import time
 import schedule
-from zadanie_1.database import create_table
-from zadanie_1.flight_data import fetch_flight_data, plot_flight_data
+from database import create_table
+from flight_data import fetch_flight_data, plot_flight_data
 
 def main(interval, max_repeats):
     create_table(max_repeats)
@@ -30,7 +30,7 @@ def main(interval, max_repeats):
 
 if __name__ == '__main__':
     FETCH_INTERVAL = 60  # Czas w sekundach między iteracjami, można inna wartosc
-    MAX_REPEATS = 10  # Maksymalna liczba iteracji
+    MAX_REPEATS = 10 # Maksymalna liczba iteracji
     # uwaga: ustawiajac MAX_REPEATS = 0 odcztujemy zapisany plik bazy danych
     main(FETCH_INTERVAL, MAX_REPEATS)
     # Po zakończeniu harmonogramu generuj wykresy
