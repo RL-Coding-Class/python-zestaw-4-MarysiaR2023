@@ -3,6 +3,7 @@ from zadanie_1.database import create_table, save_to_db
 import tempfile
 import os
 import pandas as pd
+import pytest
 
 def test_plot_flight_data():
     # Tworzymy tymczasowy plik bazy danych
