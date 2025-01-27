@@ -19,6 +19,7 @@ jobs:
       with:
         timeout: 10
         max-score: 2
+        setup-command: pip install -r zadanie_1/requirements.txt || true
         working-directory: zadanie_1
     - name: Python Test - Zadanie 2
       id: test-zadanie-2
@@ -26,7 +27,7 @@ jobs:
       with:
         timeout: 10
         max-score: 1
-        setup-command: pip install -r requirements.txt
+        setup-command: pip install -r zadanie_2/requirements.txt || true
         working-directory: zadanie_2
     - name: Python Test - Zadanie 3
       id: test-zadanie-3
@@ -34,6 +35,7 @@ jobs:
       with:
         timeout: 10
         max-score: 1
+        setup-command: pip install -r zadanie_3/requirements.txt || true
         working-directory: zadanie_3
     - name: Python Test - Zadanie 4
       id: test-zadanie-4
@@ -41,6 +43,7 @@ jobs:
       with:
         timeout: 10
         max-score: 1
+        setup-command: pip install -r zadanie_4/requirements.txt || true
         working-directory: zadanie_4
     - name: Linter
       id: pylint-test

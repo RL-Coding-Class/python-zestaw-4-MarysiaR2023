@@ -6,10 +6,26 @@ def log_event(event):
     raise NotImplementedError(f"Brak implementacji dla typu: {type(event)}")
 
 # Napisz obsluge zdarzen str
+@log_event.register
+def _(arg: str, verbose=False):
+    if verbose:
+        print("Handling strings?", end = "")
+    print(arg)
 
 # Napisz obsluge zdarzen int
+@log_event.register
+def _(arg: int, verbose=False):
+    if verbose:
+        print("Strength in numbers, eh?", end=" ")
+    print(arg)
 
 # Napisz obsluge zdarzen typu dict
+@log_event.register
+def _(arg: dict, verbose=False):
+    if verbose:
+        print("Enumerate this:")
+    for i, (key, value) in enumerate(arg.items()):
+        print(key+":" , value)
 
 
 # Klasa z metodą używającą singledispatchmethod
@@ -22,23 +38,43 @@ class EventHandler:
         """Domyślna obsługa zdarzeń"""
         raise NotImplementedError(f"Nieobsługiwany typ zdarzenia: {type(event)}")
 
-
     # Napisz obsluge zdarzen str, pamietaj: self.event_count += 1
+    @handle_event.register
+    def _(self,arg: str):
+        print("handling string: ", arg)
+        self.event_count = self.event_count+1
 
     # Napisz obsluge zdarzen int
+    @handle_event.register
+    def _(self,arg: int):
+        print("handling integer: ", arg)
+        self.event_count = self.event_count+1
 
     # Napisz obsluge zdarzen list
+    @handle_event.register
+    def _(self,arg: list):
+        print("handling integer:", end = " ")
+        for i, elem in enumerate(arg):
+            print(elem, end=" ")
+        self.event_count = self.event_count+1
 
 
 # Klasa pochodna z nowymi rejestracjami typów
 class DerivedHandler(EventHandler):
-
+    @singledispatchmethod
+    def handle_event(self, event):
+        pass
     # Napisz obsluge zdarzen int
+    @handle_event.register
+    def _(self,arg: int):
+        print("handling integer from derived class: ", arg)
+        self.event_count = self.event_count+1
 
     # Napisz obsluge zdarzen float
-
-
-
+    @handle_event.register
+    def _(self,arg: float):
+        print("handling float: ", arg)
+        self.event_count = self.event_count+1
 
 
 # Demonstracja użycia
